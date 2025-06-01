@@ -16,6 +16,7 @@ import {
   CreditCard,
   ArrowRight
 } from "lucide-react";
+import Image from 'next/image';
 
 export default function CartPage() {
 
@@ -55,7 +56,7 @@ const { cart, updateQuantity, removeFromCart } = useCartContext();
             <ShoppingCart className="w-10 h-10 text-gray-400" />
           </div>
           <h2 className="text-xl font-semibold text-gray-700 mb-4">Your cart is empty</h2>
-          <p className="text-gray-500 mb-6">Looks like you haven't added anything to your cart yet</p>
+          <p className="text-gray-500 mb-6">Looks like you haven&apos;t added anything to your cart yet</p>
           <Link href="/store" className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-3 rounded-xl hover:from-blue-600 hover:to-blue-700 transition-all duration-200 font-medium group">
             <Store className="w-5 h-5 group-hover:scale-110 transition-transform duration-200" />
             <span>Start Shopping</span>
@@ -67,7 +68,14 @@ const { cart, updateQuantity, removeFromCart } = useCartContext();
             {cart.map(item => (
               <div key={item._id} className="flex items-center border-b border-blue-100/30 pb-6 last:border-b-0 last:pb-0 group">
                 <div className="relative overflow-hidden rounded-xl mr-6">
-                  <img src={item.image} alt={item.title} className="w-24 h-24 object-cover group-hover:scale-110 transition-transform duration-300" />
+                  {/* Replaced <img> with Next.js <Image /> for optimization */}
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    width={96}
+                    height={96}
+                    className="w-24 h-24 object-cover group-hover:scale-110 transition-transform duration-300"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
 

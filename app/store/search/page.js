@@ -44,7 +44,7 @@ export default async function SearchPage({ searchParams }) {
             <Search className="w-6 h-6 text-white" />
           </div>
           <h2 className="text-3xl font-bold text-gray-800">
-            Search results for: <span className="bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">"{query}"</span>
+            Search results for: <span className="bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">&quot;{query}&quot;</span>
           </h2>
         </div>
         <p className="text-gray-600 ml-13">Found {results.length} matching products</p>
@@ -56,7 +56,7 @@ export default async function SearchPage({ searchParams }) {
             <SearchX className="w-10 h-10 text-gray-400" />
           </div>
           <h3 className="text-xl font-semibold text-gray-700 mb-4">No products found</h3>
-          <p className="text-gray-500 mb-6">We couldn't find any products matching your search for "{query}"</p>
+          <p className="text-gray-500 mb-6">We couldn&apos;t find any products matching your search for &quot;{query}&quot;</p>
           <div className="space-y-3">
             <p className="text-sm text-gray-600">Try:</p>
             <ul className="text-sm text-gray-500 space-y-1">

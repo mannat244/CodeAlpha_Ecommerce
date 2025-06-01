@@ -103,7 +103,7 @@ export default function ProfilePage() {
                 <Package className="w-10 h-10 text-gray-400" />
               </div>
               <h3 className="text-xl font-semibold text-gray-700 mb-4">No orders yet</h3>
-              <p className="text-gray-500 mb-6">You haven't placed any orders. Start shopping to see your orders here!</p>
+              <p className="text-gray-500 mb-6">You haven&apos;t placed any orders. Start shopping to see your orders here!</p>
               <Link href="/store" className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-3 rounded-xl hover:from-blue-600 hover:to-blue-700 transition-all duration-200 font-medium group">
                 <ShoppingBag className="w-5 h-5 group-hover:scale-110 transition-transform duration-200" />
                 <span>Start Shopping</span>
