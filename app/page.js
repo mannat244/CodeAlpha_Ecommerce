@@ -1,103 +1,153 @@
-import Image from "next/image";
-
+'use client';
+import { useState } from 'react';
+import { User, UserPlus, Mail, Lock, LogIn, AlertCircle } from 'lucide-react';
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [isLogin, setIsLogin] = useState(true);
+  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
+  const [message, setMessage] = useState('');
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const handleChange = (e) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const endpoint = isLogin ? '/api/auth/login' : '/api/auth/signup';
+
+    const payload = isLogin
+      ? { email: formData.email, password: formData.password }
+      : { name: formData.name, email: formData.email, password: formData.password };
+
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+
+    const data = await res.json();
+    if (data.ok) {
+      setMessage('Success!');
+      // redirect to dashboard or reload
+      window.location.href ='/store'
+    } else {
+      setMessage(data.error || 'Something went wrong');
+    }
+  };
+
+  return (
+   <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-blue-100 px-4">
+      <div className="bg-white/70 backdrop-blur-xl p-8 rounded-2xl shadow-2xl w-full max-w-md border border-blue-100/50 hover:shadow-blue-200/20 transition-all duration-300">
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl mb-4 shadow-lg">
+            <User className="w-8 h-8 text-white" />
+          </div>
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
+            {isLogin ? 'Welcome Back' : 'Join GadgetInSpot'}
+          </h1>
+          <p className="text-gray-500 text-sm mt-2">
+            {isLogin ? 'Sign in to your account' : 'Create your account today'}
+          </p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {!isLogin && (
+            <div className="transform transition-all duration-300 ease-in-out">
+              <label className="flex items-center mb-2 text-sm font-semibold text-gray-700">
+                <UserPlus className="w-4 h-4 mr-2 text-blue-500" />
+                Name
+              </label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full border-2 border-gray-200 px-4 py-3 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-200 bg-gray-50/50 hover:bg-white hover:shadow-sm"
+                required
+              />
+            </div>
+          )}
+
+          <div>
+            <label className="flex items-center mb-2 text-sm font-semibold text-gray-700">
+              <Mail className="w-4 h-4 mr-2 text-blue-500" />
+              Email
+            </label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className="w-full border-2 border-gray-200 px-4 py-3 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-200 bg-gray-50/50 hover:bg-white hover:shadow-sm"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="flex items-center mb-2 text-sm font-semibold text-gray-700">
+              <Lock className="w-4 h-4 mr-2 text-blue-500" />
+              Password
+            </label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              className="w-full border-2 border-gray-200 px-4 py-3 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all duration-200 bg-gray-50/50 hover:bg-white hover:shadow-sm"
+              required
+            />
+          </div>
+
+          {message && (
+            <div className="flex items-center p-3 bg-red-50 border border-red-200 rounded-xl animate-pulse">
+              <AlertCircle className="w-4 h-4 text-red-500 mr-2" />
+              <p className="text-sm text-red-600">{message}</p>
+            </div>
+          )}
+
+          <button
+            type="submit"
+            className="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white py-3 rounded-xl hover:from-blue-600 hover:to-blue-700 transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 shadow-lg hover:shadow-blue-200/40 font-semibold flex items-center justify-center space-x-2"
+          >
+            {isLogin ? <LogIn className="w-5 h-5" /> : <UserPlus className="w-5 h-5" />}
+            <span>{isLogin ? 'Sign In' : 'Create Account'}</span>
+          </button>
+        </form>
+
+        <div className="mt-8 text-center">
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-200"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-4 bg-white text-gray-500">or</span>
+            </div>
+          </div>
+          
+          <div className="mt-6">
+            {isLogin ? (
+              <p className="text-gray-600">
+                Don&apos;t have an account?{' '}
+                <button 
+                  onClick={() => setIsLogin(false)} 
+                  className="text-blue-600 font-semibold hover:text-blue-700 transition-colors duration-200 hover:underline"
+                >
+                  Sign Up
+                </button>
+              </p>
+            ) : (
+              <p className="text-gray-600">
+                Already have an account?{' '}
+                <button 
+                  onClick={() => setIsLogin(true)} 
+                  className="text-blue-600 font-semibold hover:text-blue-700 transition-colors duration-200 hover:underline"
+                >
+                  Sign In
+                </button>
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
