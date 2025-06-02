@@ -69,7 +69,7 @@ const { cart, updateQuantity, removeFromCart } = useCartContext();
               <div key={item._id} className="flex items-center border-b border-blue-100/30 pb-6 last:border-b-0 last:pb-0 group">
                 <div className="relative overflow-hidden rounded-xl mr-6">
                   {/* Replaced <img> with Next.js <Image /> for optimization */}
-                  <Image
+                  <img
                     src={item.image}
                     alt={item.title}
                     width={96}

@@ -9,7 +9,6 @@ import {
   IndianRupee,
   Star
 } from "lucide-react";
-import Image from 'next/image';
 
 export default async function ProductPage({ params }) {
   const { id } = await params;
@@ -64,7 +63,7 @@ const similar = rawSimilar.map(p => ({
             <Link href={`/store/${item._id}`} key={item._id}>
               <div className="bg-white/70 backdrop-blur-xl p-4 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer border border-blue-100/50 hover:border-blue-200/50 group hover:scale-[1.02]">
                 <div className="relative overflow-hidden rounded-xl mb-4">
-                  <Image 
+                  <img 
                     src={item.image} 
                     alt={item.title} 
                     className="w-full h-40 object-cover group-hover:scale-110 transition-transform duration-300" 
